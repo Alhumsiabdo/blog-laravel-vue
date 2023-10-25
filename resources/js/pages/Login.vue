@@ -2,6 +2,11 @@
     <div id="backend-view">
         <form @submit.prevent="submit">
             <h3>Login Here</h3>
+            <!-- success message -->
+            <div class="success-msg" v-if="success">
+                <i class="fa fa-check"></i>
+                Login successfully
+            </div>
             <label for="email">Email</label>
             <input type="text" id="email" v-model="fields.email" />
             <span v-if="errors.email" class="error">{{ errors.email[0] }}</span>

@@ -42,11 +42,10 @@ export default {
                     this.field = {};
                     this.errors = {};
                     this.success = true;
-
                     setInterval(() => {
                         this.success = false;
+                        // this.$router.push({ name: 'CategoriesList' })
                     }, 2500);
-                    this.$router.push({ name: 'CategoriesList' })
                 })
                 .catch((error) => {
                     this.errors = error.response.data.errors;
