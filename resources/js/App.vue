@@ -1,5 +1,30 @@
-<script setup>
-
+<script>
+export default {
+    data() {
+        return {
+            overlayVisibility: false,
+            loggedIn: false
+        };
+    },
+    methods: {
+        ShowOverlay() {
+            this.overlayVisibility = true;
+        },
+        hideOverlay() {
+            this.overlayVisibility = false;
+        },
+        updateSidebar() {
+            this.loggedIn = !this.loggedIn;
+        },
+    },
+    mounted() {
+        if(localStorage.getItem('authenticated')) {
+            this.loggedIn = true;
+        } else {
+            this.loggedIn = false;
+        }
+    }
+}
 </script>
 
 <template>
@@ -11,13 +36,13 @@
 
             <div class="side-links">
                 <ul>
-                    <li><router-link :to="{ name: 'Home' }">Home</router-link></li>
-                    <li><router-link :to="{ name: 'Blog' }">Blog</router-link></li>
-                    <li><router-link :to="{ name: 'About' }">About</router-link></li>
-                    <li><router-link :to="{ name: 'Contact' }">Contact</router-link></li>
-                    <li><router-link :to="{ name: 'Register' }">Register</router-link></li>
-                    <li><router-link :to="{ name: 'Login' }">Login</router-link></li>
-                    <li><router-link :to="{ name: 'Dashboard' }">Dashboard</router-link></li>
+                    <li><router-link @click="hideOverlay" :to="{ name: 'Home' }">Home</router-link></li>
+                    <li><router-link @click="hideOverlay" :to="{ name: 'Blog' }">Blog</router-link></li>
+                    <li><router-link @click="hideOverlay" :to="{ name: 'About' }">About</router-link></li>
+                    <li><router-link @click="hideOverlay" :to="{ name: 'Contact' }">Contact</router-link></li>
+                    <li v-if="!loggedIn"><router-link @click="hideOverlay" :to="{ name: 'Register' }">Register</router-link></li>
+                    <li v-if="!loggedIn"><router-link @click="hideOverlay" :to="{ name: 'Login' }">Login</router-link></li>
+                    <li v-if="loggedIn"><router-link @click="hideOverlay" :to="{ name: 'Dashboard' }">Dashboard</router-link></li>
                 </ul>
             </div>
 
@@ -41,7 +66,7 @@
         <!-- main -->
         <main class="container">
             <!-- Render Components Depending on the page visited -->
-            <RouterView />
+            <router-view @update-sidebar="updateSidebar"></router-view>
         </main>
 
         <!-- Main footer -->

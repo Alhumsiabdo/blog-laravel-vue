@@ -1,8 +1,8 @@
 <template>
     <div id="backend-view">
-        <div class="logout"><a href="#">Log out</a></div>
+        <div class="logout"><a href="#" @click="logout">Log out</a></div>
         <h1 class="heading">Dashboard</h1>
-        <span>Hi Alphayo ?</span>
+        <span>Hi {{ name }}!</span>
         <div class="links">
             <ul>
                 <li><a href="">Create Post</a></li>
@@ -16,7 +16,36 @@
 </template>
   
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            name: ''
+        }
+    },
+    mounted() {
+        axios
+            .get('/api/user')
+            .then((response) => this.name = response.data.name)
+            .catch(error => {
+                if(error.response.status === 401) {
+                        this.$emit("updateSidebar");
+                        localStorage.removeItem("authenticated");
+                        this.$router.push({ name: "Login" });
+                    }
+            });
+    },
+    methods: {
+        logout() {
+            axios.post('/api/logout')
+                .then((response) => {
+                    this.$router.push({ name: 'Home' });
+                    localStorage.removeItem('authenticated');
+                    this.$emit('updateSidebar');
+                })
+                .catch((error) => console.log(error));
+        }
+    }
+};
 </script>
   
 <style scoped>
@@ -57,4 +86,5 @@ export default {};
     font-size: 26px;
     display: inline-block;
     margin: 10px 0;
-}</style>
+}
+</style>
