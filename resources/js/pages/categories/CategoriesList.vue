@@ -1,6 +1,10 @@
 <template>
     <div class="categories-list">
         <h1>Categories List</h1>
+        <div class="success-msg" v-if="success">
+            <i class="fa fa-check"></i>
+            Deleted successfully
+        </div>
         <div class="item" v-for="(category, index) in  categories " :key="category.id">
             <span>{{ index + 1 }}</span>
             <p>{{ category.name }}</p>
@@ -8,7 +12,8 @@
                 <router-link :to="{ name: 'EditCategories', params: { id: category.id } }">Edit</router-link>
             </div>
 
-            <input type="submit" value="Delete" />
+
+            <input type="submit" value="Delete" @click="destroy(category.id)" />
         </div>
         <div class="index-categories">
             <router-link :to="{ name: 'CreateCategories' }">Create Categories<span>&#8594;</span></router-link>
@@ -21,15 +26,34 @@ export default {
     data() {
         return {
             categories: [],
+            success: false
         };
     },
+    methods: {
+        destroy(id) {
+            axios.delete("/api/categories/" + id)
+                .then((response) => {
+                    this.success = true;
+                    setInterval(() => {
+                        this.success = false;
+                    }, 3000);
+                    this.fetchCategories();
+                })
+                .catch((error) => {
+                    console.log();
+                })
+        },
+        fetchCategories() {
+            axios
+                .get("/api/categories")
+                .then((response) => (this.categories = response.data))
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    },
     mounted() {
-        axios
-            .get("/api/categories")
-            .then((response) => (this.categories = response.data))
-            .catch((error) => {
-                console.log(error);
-            });
+        this.fetchCategories();
     },
 };
 </script>
