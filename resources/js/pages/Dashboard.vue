@@ -7,16 +7,15 @@
             <ul>
                 <li><a href="">Create Post</a></li>
 
-                <li><a href="">Create Category</a></li>
+                <li><router-link :to="{ name: 'CreateCategories' }">Create Category</router-link></li>
 
-                <li><a href="">Categories List</a></li>
+                <li><router-link :to="{ name: 'CategoriesList' }">Categories List</router-link></li>
             </ul>
         </div>
     </div>
 </template>
   
 <script>
-// hi
 export default {
     data() {
         return {
