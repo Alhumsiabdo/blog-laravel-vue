@@ -43,7 +43,7 @@ export default {
           this.success = true;
           setInterval(() => {
             this.success = false;
-            this.$router.push({ name: 'CategoriesList' })
+            // this.$router.push({ name: 'CategoriesList' })
           }, 2500);
         })
         .catch((error) => {
