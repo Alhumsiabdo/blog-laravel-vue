@@ -33,6 +33,8 @@ Route::get('categories', [CategoryController::class, 'index']);
 
 #### Posts ####
 Route::get('home-posts', [HomeController::class, 'index']);
+Route::get('posts/{post:slug}', [PostController::class, 'show']);
+Route::get('posts', [PostController::class, 'index']);
 Route::middleware('auth:sanctum')->post('posts', [PostController::class, 'store']);
 
 #### public route ####
