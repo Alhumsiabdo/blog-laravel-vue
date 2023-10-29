@@ -29,7 +29,11 @@
           <label for="categories"><span>Choose a category:</span></label>
           <select v-model="fields.category_id" id="categories">
             <option disabled value="">Select option</option>
-            <option :value="category.id" v-for="category in categories" :key="category.id">
+            <option
+              :value="category.id"
+              v-for="category in categories"
+              :key="category.id"
+            >
               {{ category.name }}
             </option>
           </select>
@@ -110,7 +114,6 @@ export default {
   background-color: #fff;
   padding: 0 3vw;
 }
-
 .container input,
 textarea,
 select {
@@ -123,7 +126,6 @@ select {
   margin-bottom: 20px;
   font-size: 16px;
 }
-
 h1 {
   text-align: center;
   padding: 60px 0 50px 0;
