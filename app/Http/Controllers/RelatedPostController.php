@@ -13,7 +13,6 @@ class RelatedPostController extends Controller
         $category = $post->category;
 
         $relatedPosts = $category->posts()->where('id', '!=', $post->id)->latest()->take(3)->get();
-        dd($relatedPosts);
         return PostResource::collection($relatedPosts);
     }
 }

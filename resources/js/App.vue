@@ -66,7 +66,7 @@ export default {
         <!-- main -->
         <main class="container">
             <!-- Render Components Depending on the page visited -->
-            <router-view @update-sidebar="updateSidebar"></router-view>
+            <router-view @update-sidebar="updateSidebar" :key="$route.path"></router-view>
         </main>
 
         <!-- Main footer -->
